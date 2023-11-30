@@ -94,10 +94,10 @@ for row in percentage_rows:
         st.write("Error message:", str(e))
         # Optionally, print the DataFrame for debugging
         st.write(financial_metrics)
-    financial_metrics.loc[row,] = financial_metrics.loc[row,].astype(float)
+    financial_metrics.loc[row,] = pd.to_numeric(financial_metrics.loc[row,], errors='coerce')
     financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2%}'.format)
 for row in number_rows:
-    financial_metrics.loc[row,] = financial_metrics.loc[row,].astype(float)
+    financial_metrics.loc[row,] = pd.to_numeric(financial_metrics.loc[row,], errors='coerce')
     financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2}'.format)
 
 return_rows = ["Rendement brut (période)", "Rendement indice (période)", "Rendement brut (annualisée)", "Rendement indice (annualisée)", "Valeur ajoutée (période)", "Valeur ajoutée annualisée"]
@@ -136,6 +136,6 @@ if st.session_state["profile"] is not None:
         risk_col.markdown("<h2 style='text-align: center;'>Risque</h2>", unsafe_allow_html=True)
         risk_col.dataframe(risk_metrics, use_container_width=True)
         
-
+print(pd.__version__)
 
 
