@@ -80,7 +80,7 @@ if st.session_state["profile"] is not None:
         cols = [i for i in list(metrique.columns) if i != 'Index']
         financial_metrics[cols] = metrique[cols]
 
-financial_metrics = financial_metrics.set_index("Index", inplace=True)
+financial_metrics.set_index("Index", inplace=True)
 print(financial_metrics)
 
 percentage_rows = ["Rendement brut (période)", "Rendement indice (période)", "Rendement brut (annualisée)", "Rendement indice (annualisée)", "Valeur ajoutée (période)", "Valeur ajoutée annualisée","Volatilité annualisée du fonds", "Volatilité annualisée de l'indice"]
