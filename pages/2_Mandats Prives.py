@@ -4,6 +4,9 @@ import numpy as np
 from utils import * 
 from finance_functions import * 
 
+#remove warnings from terminal pandas
+pd.options.mode.chained_assignment = None  # default='warn'
+
 def allocation_df_prep(allocation, df, returns):
     selected_row = df.loc[allocation]
     allocation_df = pd.DataFrame( columns= selected_row.index, index= returns.Période)
@@ -77,7 +80,7 @@ if st.session_state["profile"] is not None:
         cols = [i for i in list(metrique.columns) if i != 'Index']
         financial_metrics[cols] = metrique[cols]
 
-financial_metrics.set_index("Index", inplace=True)
+financial_metrics = financial_metrics.set_index("Index", inplace=True)
 print(financial_metrics)
 
 percentage_rows = ["Rendement brut (période)", "Rendement indice (période)", "Rendement brut (annualisée)", "Rendement indice (annualisée)", "Valeur ajoutée (période)", "Valeur ajoutée annualisée","Volatilité annualisée du fonds", "Volatilité annualisée de l'indice"]
