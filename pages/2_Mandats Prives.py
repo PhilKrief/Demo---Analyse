@@ -94,6 +94,8 @@ for row in percentage_rows:
         st.write("Error message:", str(e))
         # Optionally, print the DataFrame for debugging
         st.write(financial_metrics)
+    print(row)
+    print(financial_metrics.index)
     financial_metrics.loc[row,] = pd.to_numeric(financial_metrics.loc[row,], errors='coerce')
     financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2%}'.format)
 for row in number_rows:
