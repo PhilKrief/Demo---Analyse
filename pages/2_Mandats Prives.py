@@ -87,6 +87,13 @@ percentage_rows = ["Rendement brut (période)", "Rendement indice (période)", "
 number_rows  = ["Risque actif annualisé", "Ratio information", "Beta", "Alpha annualisé", "Ratio sharpe", "Coefficient de corrélation"]
 
 for row in percentage_rows:
+    try:
+        financial_metrics.loc[row,] = financial_metrics.loc[row,].astype(float)
+    except Exception as e:
+        st.write("Error processing row:", row)
+        st.write("Error message:", str(e))
+        # Optionally, print the DataFrame for debugging
+        st.write(financial_metrics)
     financial_metrics.loc[row,] = financial_metrics.loc[row,].astype(float)
     financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2%}'.format)
 for row in number_rows:
