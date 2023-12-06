@@ -9,7 +9,7 @@ pd.options.mode.chained_assignment = None  # default='warn'
 
 def allocation_df_prep(allocation, df, returns):
     selected_row = df.loc[allocation]
-    allocation_df = pd.DataFrame( columns= selected_row.index, index= returns.Période)
+    allocation_df = pd.DataFrame(columns= selected_row.index, index= returns.Période)
     allocation_df.loc[:,:] = selected_row.values
     return allocation_df
 
@@ -81,26 +81,17 @@ if st.session_state["profile"] is not None:
         financial_metrics[cols] = metrique[cols]
 
 financial_metrics.set_index("Index", inplace=True)
-print(financial_metrics)
+
 
 percentage_rows = ["Rendement brut (période)", "Rendement indice (période)", "Rendement brut (annualisée)", "Rendement indice (annualisée)", "Valeur ajoutée (période)", "Valeur ajoutée annualisée","Volatilité annualisée du fonds", "Volatilité annualisée de l'indice"]
 number_rows  = ["Risque actif annualisé", "Ratio information", "Beta", "Alpha annualisé", "Ratio sharpe", "Coefficient de corrélation"]
 
 for row in percentage_rows:
-    try:
-        financial_metrics.loc[row,] = financial_metrics.loc[row,].astype(float)
-    except Exception as e:
-        st.write("Error processing row:", row)
-        st.write("Error message:", str(e))
-        # Optionally, print the DataFrame for debugging
-        st.write(financial_metrics)
-    print(financial_metrics.loc[row,])
-    print(financial_metrics.index)
-    financial_metrics.loc[row,] = pd.to_numeric(financial_metrics.loc[row,], errors='coerce')
-    financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2%}'.format)
+    financial_metrics.loc[row,:] = list(pd.to_numeric(financial_metrics.loc[row,:], errors='coerce'))
+    financial_metrics.loc[row,:] = financial_metrics.loc[row,:].apply('{:.2%}'.format)
 for row in number_rows:
-    financial_metrics.loc[row,] = pd.to_numeric(financial_metrics.loc[row,], errors='coerce')
-    financial_metrics.loc[row,] = financial_metrics.loc[row,].apply('{:.2}'.format)
+    financial_metrics.loc[row,:] = pd.to_numeric(financial_metrics.loc[row,:], errors='coerce')
+    financial_metrics.loc[row,:] = financial_metrics.loc[row,:].apply('{:.2}'.format)
 
 return_rows = ["Rendement brut (période)", "Rendement indice (période)", "Rendement brut (annualisée)", "Rendement indice (annualisée)", "Valeur ajoutée (période)", "Valeur ajoutée annualisée"]
 
@@ -138,6 +129,6 @@ if st.session_state["profile"] is not None:
         risk_col.markdown("<h2 style='text-align: center;'>Risque</h2>", unsafe_allow_html=True)
         risk_col.dataframe(risk_metrics, use_container_width=True)
         
-print(pd.__version__)
+
 
 
